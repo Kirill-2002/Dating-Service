@@ -3,6 +3,7 @@ package ru.kireev.moon.back.service;
 import ru.kireev.moon.back.dao.ProfileDao;
 import ru.kireev.moon.back.model.Profile;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ProfileService {
@@ -22,5 +23,17 @@ public class ProfileService {
         return dao.findById(id);
     }
 
-    //TODO delete, update, findAll
+    public List<Profile> findAll (){
+        return  dao.findAll();
+    }
+
+    public void update (Profile profile){
+        dao.update(profile);
+    }
+
+    public boolean delete (Long id){
+        if (id ==null) return false;
+        return  dao.delete(id);
+    }
+
 }

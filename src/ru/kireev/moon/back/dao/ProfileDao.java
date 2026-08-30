@@ -2,6 +2,8 @@ package ru.kireev.moon.back.dao;
 
 import ru.kireev.moon.back.model.Profile;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,5 +30,21 @@ public class ProfileDao {
         return Optional.ofNullable(storage.get(id));
     }
 
-    //TODO delete, update, findAll
+    public List<Profile> findAll(){
+        return new ArrayList<>(storage.values());
+    }
+
+    public void update (Profile profile){
+        Long id = profile.getId();
+        if(id == null){
+            return;
+        }
+        storage.put(id, profile);
+    }
+
+    public boolean delete(Long id){
+        return  storage.remove(id)!=null;
+    }
+
+
 }
