@@ -23,6 +23,7 @@ public class ProfileDao {
         long id = idStorage.incrementAndGet();
         profile.setId(id);
         storage.put(id, profile);
+        System.out.println(storage.values());
         return profile;
     }
 
