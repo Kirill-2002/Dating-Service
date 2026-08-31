@@ -16,38 +16,7 @@ public class BackServerRunner {
 
         ProfileController profileController = new ProfileController(new ProfileService(new ProfileDao()));
 
-
-        try (ServerSocket serverSocket = new ServerSocket(8080);
-             Socket socket = serverSocket.accept();
-             DataOutputStream responseStream= new DataOutputStream(socket.getOutputStream());
-             DataInputStream requestStream = new DataInputStream(socket.getInputStream());
-        ) {
-               String request = requestStream.readUTF();
-               String response;
-
-
-
-               while(!"stop".equals(request)){
-
-                   String[] parts = request.split(" ", 2);
-                   String command = parts[0];
-                   String argument = parts.length > 1 ? parts[1]: "";
-
-                   switch (command){
-                       case "save" -> response = profileController.save(argument);
-                       case "update" -> response = profileController.update(argument);
-                       case "delete" -> response = profileController.delete(argument);
-                       case "findAll" -> response = profileController.findAll(argument);
-                       case "findById" -> response = profileController.findById(argument);
-                       default ->  response = "Unsupported operation";
-
-                   }
-
-                   System.out.println("Client request: " + request);
-                   responseStream.writeUTF(response);
-                   request = requestStream.readUTF();
-               }
-
-        }
+        HttpServer server = new HttpServer(5);
+        server.start();
     }
 }
